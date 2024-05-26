@@ -4,6 +4,16 @@ This application takes a URL and shows the hops on a map using python
 
 ![woohoo](https://github.com/sofjones/learning/assets/43796114/293b411b-a46f-4f2f-9207-3b2b56335b74)
 
+#### trace route
+First we have a user input the URL
+We trace the route to the URL entered 
+We output all the IPs to `output/output.txt`
+
+##### mapping coordinates
+From there to get the location of the hops the command `curl ipinfo.io/$ip` is run
+this gets the coordinates of each ip address
+the coordinates are saved to `output/locations.txt`
+each location is then mapped using `folium`
 
 #### Windows commands to list files (non powershell)
 
