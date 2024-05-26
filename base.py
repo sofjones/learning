@@ -2,6 +2,7 @@ import os
 import subprocess
 import time
 import ipaddress
+import map
 
 class Command:
     def __init__(self, cmd, flags=[],target="", output=True):
@@ -34,12 +35,25 @@ def is_ip_address(word):
     except ValueError:
         return False
 
+def get_ip_loc(filepath):
+    ip_addresses = []
+    with open(filepath) as f:
+        for line in f.readlines():
+            words = line.split()
+            if len(words) > 0:
+                last_word = words[-1]
+                if is_ip_address(last_word):
+                    ip_addresses.append(last_word)
+
+    for ip in ip_addresses:
+        location_ip = Command("curl", [],"ipinfo.io/" + ip + " | findstr loc >> output/locations.txt", False)
+        location_ip.run_command()
 #url = input("Please input url: ")
 #ping = Command("ping",[],url)
 #ping.run_command()
 
-user = Command("whoami")
-user.run_command()
+# user = Command("whoami")
+# user.run_command()
 ip_addr = Command("ipconfig | findstr IPv4")
 
 
@@ -48,24 +62,37 @@ ip_addr = Command("ipconfig | findstr IPv4")
 nslookup = "nslookup"
 url = "google.com"
 filepath = "output/output.txt"
-trace = Command("tracert -d ",[], url + " > output/output.txt", False)
-trace.run_command()
 
-time.sleep(3)
+###
+# RUN TRACEROUTE COMMAND TO VIEW PATH TO SITE
+###
+# trace = Command("tracert -d ",[], url + " > output/output.txt", False)
+# trace.run_command()
 
-ip_addresses = []
+# WAIT FOR CMD TO COMPLETE
+# time.sleep(3)
+
+### RETRIEVE THE COORDINATES
+# get_ip_loc(filepath)
+time.sleep(1)
+
+x, y = [], []
+filepath = "output/locations.txt"
 with open(filepath) as f:
     for line in f.readlines():
         words = line.split()
         if len(words) > 0:
-            last_word = words[-1]
-            if is_ip_address(last_word):
-                ip_addresses.append(last_word)
+            locs = words[-1]
+            split_locs = locs.split(",")
+            lat = split_locs[0].replace('"','')
+            long = split_locs[1].replace('"','')
+            x.append(float(lat))
+            y.append(float(long))
 
-for ip in ip_addresses:
-    location_ip = Command("curl", [],"ipinfo.io/" + ip + " | findstr loc >> output/locations.txt", False)
-    location_ip.run_command()
+map.map_locations(x,y)
 
+
+        
 # get_file_contents = open('hi.txt','r')
 # print(get_file_contents.read())
 #get_file_contents.run_command()
