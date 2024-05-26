@@ -48,32 +48,29 @@ def get_ip_loc(filepath):
     for ip in ip_addresses:
         location_ip = Command("curl", [],"ipinfo.io/" + ip + " | findstr loc >> output/locations.txt", False)
         location_ip.run_command()
-#url = input("Please input url: ")
 #ping = Command("ping",[],url)
 #ping.run_command()
 
 # user = Command("whoami")
 # user.run_command()
-ip_addr = Command("ipconfig | findstr IPv4")
+#ip_addr = Command("ipconfig | findstr IPv4")
 
-
-#ip = input("Please input ip: ")
-
-nslookup = "nslookup"
-url = "google.com"
+print('Welcome to the route tracer map!')
+url = input("Please input a url to visit: ") #validate url
 filepath = "output/output.txt"
 
 ###
 # RUN TRACEROUTE COMMAND TO VIEW PATH TO SITE
 ###
-# trace = Command("tracert -d ",[], url + " > output/output.txt", False)
-# trace.run_command()
+print('Thank you! We are tracing the route to ' + url)
+trace = Command("tracert -d ",[], url + " > output/output.txt", False)
+trace.run_command()
 
 # WAIT FOR CMD TO COMPLETE
-# time.sleep(3)
+time.sleep(3)
 
 ### RETRIEVE THE COORDINATES
-# get_ip_loc(filepath)
+get_ip_loc(filepath)
 time.sleep(1)
 
 x, y = [], []
@@ -90,13 +87,8 @@ with open(filepath) as f:
             y.append(float(long))
 
 map.map_locations(x,y)
-
-
         
-# get_file_contents = open('hi.txt','r')
-# print(get_file_contents.read())
-#get_file_contents.run_command()
-mac_addr = "getmac"
-tasks = "tasklist | findstr chrome"
-arp = "arp -a"
-host = "hostname"
+# mac_addr = "getmac"
+# tasks = "tasklist | findstr chrome"
+# arp = "arp -a"
+# host = "hostname"

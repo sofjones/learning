@@ -5,6 +5,7 @@ import webbrowser
 def map_locations(lat, long):
     df = pd.DataFrame({'Lat': lat, 'Long': long})
     m = folium.Map(location=[df.Lat[0], df.Long[0]])
+    print('Mapping the ' + str(len(lat)) + ' hops to your destination url')
     for i in range(len(lat)):
         folium.Marker(
             location=[lat[i],long[i]]
