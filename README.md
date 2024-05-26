@@ -55,3 +55,10 @@
 - `-entry-type error `
 - example `get-eventlog -logname application -entry-type error -newest 10 | format-list`
 
+
+#### making a map of tracert
+if we saved all the ip hops from tracert
+we could get the location of each of the ips from `curl ipinfo.io/<ip>`
+
+* when we have the loc `x, y` then we could potentially map the route 
+* ipv4 or ipv6 works fine
