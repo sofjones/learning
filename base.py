@@ -35,8 +35,9 @@ def is_ip_address(word):
     except ValueError:
         return False
 
-def get_ip_loc(filepath):
+def get_ip_loc(filepath, url):
     ip_addresses = []
+    output_filepath = "output/" + url + ".txt"
     with open(filepath) as f:
         for line in f.readlines():
             words = line.split()
@@ -46,8 +47,9 @@ def get_ip_loc(filepath):
                     ip_addresses.append(last_word)
 
     for ip in ip_addresses:
-        location_ip = Command("curl", [],"ipinfo.io/" + ip + " | findstr loc >> output/locations.txt", False)
+        location_ip = Command("curl", [],"ipinfo.io/" + ip + " | findstr loc >> "+ output_filepath, False)
         location_ip.run_command()
+    return output_filepath
 #ping = Command("ping",[],url)
 #ping.run_command()
 
@@ -70,11 +72,11 @@ trace.run_command()
 time.sleep(3)
 
 ### RETRIEVE THE COORDINATES
-get_ip_loc(filepath)
+out_file = get_ip_loc(filepath, url)
 time.sleep(1)
 
 x, y = [], []
-filepath = "output/locations.txt"
+filepath = out_file
 with open(filepath) as f:
     for line in f.readlines():
         words = line.split()
