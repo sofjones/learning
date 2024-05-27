@@ -2,6 +2,9 @@
 
 This application takes a URL and shows the hops on a map using python
 
+![end_marker](https://github.com/sofjones/learning/assets/43796114/80436d07-12e6-452d-af9c-9656e0142ce3)
+
+previous map with no end marker
 ![woohoo](https://github.com/sofjones/learning/assets/43796114/293b411b-a46f-4f2f-9207-3b2b56335b74)
 
 #### trace route
